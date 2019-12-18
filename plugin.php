@@ -12,7 +12,4 @@
  * @package         My_Plugin
  */
 
-/**
- * My Plugin class
- */
-class My_Plugin {}
+require_once 'src/class-my-plugin.php';
