@@ -1,15 +1,12 @@
 <?php
 /**
- * Plugin Name:     My Plugin
- * Plugin URI:      PLUGIN SITE HERE
- * Description:     PLUGIN DESCRIPTION HERE
- * Author:          YOUR NAME HERE
- * Author URI:      YOUR SITE HERE
- * Text Domain:     my-plugin
- * Domain Path:     /languages
+ * Plugin Name:     Grouped Terms
+ * Description:     Allows to group terms to work as a single unit.
+ * Author:          Seocom
+ * Author URI:      https://seocom.agency
  * Version:         0.1.0
  *
- * @package         My_Plugin
  */
 
-require_once 'src/class-my-plugin.php';
+require_once 'src/WP_Term_Grouped.php';
+require_once 'src/main.php';
