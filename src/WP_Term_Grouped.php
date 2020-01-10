@@ -37,4 +37,11 @@ class WP_Term_Grouped {
 	public function getId():string {
 		return $this->_id;
 	}
+
+	public function hasTerm( WP_Term $term ) {
+		$has = array_filter( $this->terms(), function ($v) use ($term) {
+			return ($v->term_id == $term->term_id);
+		} );
+		return (count($has)>0);
+	}
 }

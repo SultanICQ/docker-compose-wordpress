@@ -47,19 +47,18 @@ class WP_Term_Grouped_Repository
 	}
 
 	public function add( WP_Term_Grouped $group ) {
-//		if ( $group->getId() == '' ) {
-//			$group->setId( $this->buildIdForGroup( $group ) );
-//		}
-//		$this->data[ $group->getId() ] = $this->dehydrateGroup($group);
-//		$this->save();
+		if ( $group->getId() == '' ) {
+			$group->setId( $this->buildIdForGroup( $group ) );
+		}
+		$this->data[ $group->getId() ] = $this->dehydrateGroup($group);
+		$this->save();
+
+		return $group->getId();
 	}
-
-
-
 
 	public function getByTerm( WP_Term $term ): ?WP_Term_Grouped {
 		foreach( $this->data as $data ) {
-			$group = WP_Term_Grouped::hydrate( $data );
+			$group = $this->hydrateGroup( $data );
 			if ( $group->hasTerm( $term ) ) {
 				return $group;
 			}

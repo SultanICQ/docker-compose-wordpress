@@ -59,6 +59,51 @@ class TestRepository extends WP_UnitTestCase {
 		$this->assertEquals( $group, $hydrate );
 	}
 
+	function test_can_persist_term_group() {
+		$repo = new Testable_WP_Term_Grouped_Repository();
+		$insert1 = wp_insert_term('Term 1', 'category' );
+		$insert2 = wp_insert_term('Term 2', 'category' );
+		$group = new WP_Term_Grouped();
+		$group->add( get_term($insert1['term_id']) );
+		$group->add( get_term($insert2['term_id']) );
+
+		$id = $repo->add( $group );
+
+		$this->assertNotEmpty( $id );
+	}
+
+	function test_can_retrieve_term_group_with_a_term() {
+		$repo = new Testable_WP_Term_Grouped_Repository();
+		$insert1 = wp_insert_term('Term 1', 'category' );
+		$insert2 = wp_insert_term('Term 2', 'category' );
+		$group = new WP_Term_Grouped();
+		$group->add( get_term($insert1['term_id']) );
+		$group->add( get_term($insert2['term_id']) );
+
+		$id = $repo->add( $group );
+
+		$retrievedGroup = $repo->getByTerm( get_term($insert1['term_id']) );
+
+		$this->assertNotEmpty( $id );
+		$this->assertEquals( $id, $retrievedGroup->getId() );
+	}
+
+	function test_non_grouped_term_returns_null_group() {
+		$repo = new Testable_WP_Term_Grouped_Repository();
+		$insert1 = wp_insert_term('Term 1', 'category' );
+		$insert2 = wp_insert_term('Term 2', 'category' );
+		$insert3 = wp_insert_term('Term 3', 'category' );
+		$group = new WP_Term_Grouped();
+		$group->add( get_term($insert1['term_id']) );
+		$group->add( get_term($insert2['term_id']) );
+
+		$repo->add( $group );
+
+		$retrievedGroup = $repo->getByTerm( get_term($insert3['term_id']) );
+
+		$this->assertEmpty( $retrievedGroup );
+	}
+
 }
 
 class Testable_WP_Term_Grouped_Repository extends WP_Term_Grouped_Repository {
