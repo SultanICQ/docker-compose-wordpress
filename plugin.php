@@ -8,5 +8,6 @@
  *
  */
 
+require_once 'src/WP_Term_Grouped_Repository.php';
 require_once 'src/WP_Term_Grouped.php';
 require_once 'src/main.php';

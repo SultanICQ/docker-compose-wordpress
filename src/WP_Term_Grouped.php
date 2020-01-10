@@ -1,35 +1,40 @@
 <?php
 
 class WP_Term_Grouped {
-
+	private $_id = '';
+	private $_terms = [];
 
 	/**
 	 * @var WP_Term
 	 */
-	private $_term;
+	private $_primary;
 
-	/**
-	 * @var array
-	 */
-	private $_group;
+	public function terms():array {
+		// We return a copy of the array
+		return array_values($this->_terms);
+	}
 
-	public function __construct(WP_Term $term)
-    {
-		$this->_term = $term;
-		$this->_group = [];
-    }
+	public function add( WP_Term $term ) {
+		$this->_terms[$term->term_id] = $term;
 
-	public function __get($property){
-		if(property_exists($this->_term, $property)) {
-			return $this->_term->$property;
+		if ( count($this->terms() ) == 1 ) {
+			$this->setPrimary($term);
 		}
 	}
 
-	public function group() {
-		return $this->_group;
+	public function setPrimary( WP_Term $term ) {
+		$this->_primary = $term;
 	}
 
-	public function addToGroup( WP_Term $term ):void {
-		$this->_group[ $term->term_id ] = $term;
+	public function getPrimary():?WP_Term {
+		return $this->_primary;
+	}
+
+	public function setId( string $newId ) {
+		$this->_id = $newId;
+	}
+
+	public function getId():string {
+		return $this->_id;
 	}
 }
