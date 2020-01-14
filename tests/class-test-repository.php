@@ -103,7 +103,6 @@ class TestRepository extends WP_UnitTestCase {
 
 		$this->assertEmpty( $retrievedGroup );
 	}
-
 }
 
 class Testable_WP_Term_Grouped_Repository extends WP_Term_Grouped_Repository {

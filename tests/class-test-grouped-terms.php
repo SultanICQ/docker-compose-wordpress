@@ -118,27 +118,6 @@ class TestGroupedTerms extends WP_UnitTestCase {
 		$this->assertEquals( $term1, $singlePrimary );
 	}
 
-//	function test_can_obtain_term_group_from_single_term() {
-//		$group = new WP_Term_Grouped();
-//		$term1 = $this->createFakeWPTerm( [
-//			'term_id' => 1,
-//			'name'    => 'Term 1',
-//			'slug'    => 'term-1',
-//		] );
-//		$term2 = $this->createFakeWPTerm( [
-//			'term_id' => 2,
-//			'name'    => 'Term 2',
-//			'slug'    => 'term-2',
-//		] );
-//		$group->add($term1);
-//		$group->add($term2);
-//
-//		$found = WP_Term_Grouped::getByTerm( $term1 );
-//
-//		$this->assertNotEmpty( $found );
-//		$this->assertEquals( $group->terms(), $found->terms() );
-//	}
-
 	private function createFakeWPTerm( array $vars ) {
 		$term = new stdClass();
 		foreach( $vars as $key => $value ) {

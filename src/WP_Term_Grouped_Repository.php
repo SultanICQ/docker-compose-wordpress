@@ -1,7 +1,6 @@
 <?php
 
-class WP_Term_Grouped_Repository
-{
+class WP_Term_Grouped_Repository {
 	private $option = 'term_grouped_data';
 
 	protected $data = [];
@@ -10,11 +9,11 @@ class WP_Term_Grouped_Repository
 		$this->load();
 	}
 
-	private function buildIdForGroup( WP_Term_Grouped $group ) {
+	public function buildIdForGroup( WP_Term_Grouped $group ) {
 		return md5( serialize($group) );
 	}
 
-	public function dehydrateGroup( WP_Term_Grouped $group ):array {
+	public function dehydrateGroup( WP_Term_Grouped $group ) {
 
 		$primary = $group->getPrimary();
 		$primary = empty($primary) ? '' : $primary->term_id;
@@ -26,7 +25,7 @@ class WP_Term_Grouped_Repository
 		];
 	}
 
-	public function hydrateGroup( array $data ):WP_Term_Grouped {
+	public function hydrateGroup( array $data ) {
 		$group = new WP_Term_Grouped();
 
 		$group->setId( $data['id'] );
@@ -38,7 +37,7 @@ class WP_Term_Grouped_Repository
 		return $group;
 	}
 
-	private function load() {
+	public function load() {
 		$this->data = (array)get_option($this->option,[]);
 	}
 
@@ -48,7 +47,8 @@ class WP_Term_Grouped_Repository
 
 	public function add( WP_Term_Grouped $group ) {
 		if ( $group->getId() == '' ) {
-			$group->setId( $this->buildIdForGroup( $group ) );
+			$id = $this->buildIdForGroup( $group );
+			$group->setId( $id );
 		}
 		$this->data[ $group->getId() ] = $this->dehydrateGroup($group);
 		$this->save();
@@ -56,7 +56,7 @@ class WP_Term_Grouped_Repository
 		return $group->getId();
 	}
 
-	public function getByTerm( WP_Term $term ): ?WP_Term_Grouped {
+	public function getByTerm( WP_Term $term ) {
 		foreach( $this->data as $data ) {
 			$group = $this->hydrateGroup( $data );
 			if ( $group->hasTerm( $term ) ) {

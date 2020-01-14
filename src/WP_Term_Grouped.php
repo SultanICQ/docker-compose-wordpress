@@ -9,7 +9,7 @@ class WP_Term_Grouped {
 	 */
 	private $_primary;
 
-	public function terms():array {
+	public function terms() {
 		// We return a copy of the array
 		return array_values($this->_terms);
 	}
@@ -26,15 +26,15 @@ class WP_Term_Grouped {
 		$this->_primary = $term;
 	}
 
-	public function getPrimary():?WP_Term {
+	public function getPrimary() {
 		return $this->_primary;
 	}
 
-	public function setId( string $newId ) {
+	public function setId( $newId ) {
 		$this->_id = $newId;
 	}
 
-	public function getId():string {
+	public function getId() {
 		return $this->_id;
 	}
 
@@ -43,5 +43,9 @@ class WP_Term_Grouped {
 			return ($v->term_id == $term->term_id);
 		} );
 		return (count($has)>0);
+	}
+
+	public function clear() {
+		$this->_terms = [];
 	}
 }

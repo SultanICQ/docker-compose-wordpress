@@ -8,6 +8,12 @@
  *
  */
 
+define( 'WP_TERM_GROUPED_TAX', 'portfolio-category' );
+
 require_once 'src/WP_Term_Grouped_Repository.php';
 require_once 'src/WP_Term_Grouped.php';
-require_once 'src/main.php';
+require_once 'src/WPTermGroupedAdminCategory.php';
+require_once 'src/WPTermGroupedFrontCategory.php';
+
+$WPTermGroupedAdminCategory = new WPTermGroupedAdminCategory();
+$WPTermGroupedFrontCategory = new WPTermGroupedFrontCategory();
