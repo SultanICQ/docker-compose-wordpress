@@ -6,6 +6,13 @@ class WPTermGroupedFrontCategory {
 	 */
 	public function __construct() {
 		add_action ( 'template_redirect', array(&$this,'redirect_taxonomy') );
+		add_action( 'pre_get_posts', array(&$this,'remove_limit_in_taxonomy_request') );
+	}
+
+	function remove_limit_in_taxonomy_request($query) {
+		if ( $query->is_main_query() && $query->is_tax() && !empty($query->query_vars[ $this->taxonomy ])) {
+			$query->set('posts_per_page',-1);
+		}
 	}
 
 	function redirect_taxonomy() {
