@@ -48,4 +48,12 @@ class WP_Term_Grouped {
 	public function clear() {
 		$this->_terms = [];
 	}
+
+	public function parents() {
+		$parents = [];
+		foreach( $this->terms() as $term ) {
+			if ( $term->parent == 0 ) {continue;}
+			$parents[$term->parent] = get_term( $term->parent, $term->taxonomy );
+		}
+	}
 }

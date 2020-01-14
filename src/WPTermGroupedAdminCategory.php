@@ -96,7 +96,7 @@ class WPTermGroupedAdminCategory {
 					$checked = '';
 					if ( in_array( $t->term_id, $grouped ) ) { $checked = ' checked="checked"'; }
 					?>
-					<input type="checkbox" value="<?=$t->term_id?>" id="terms_grouped_<?=$t->term_id?>" name="grouped_term[terms][]"<?=$checked?>> <?=$t->name;?> &nbsp;
+					<input type="checkbox" value="<?=$t->term_id?>" id="terms_grouped_<?=$t->term_id?>" name="grouped_term[terms][]"<?=$checked?>> <?=$t->name;?><br/>
 				<?php endforeach; ?>
 				<p class="description"><?php _e('Select the terms that define the group'); ?></p></td>
 		</tr>
