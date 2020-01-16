@@ -8,15 +8,35 @@ class WPTermGroupedFrontCategory {
 		add_action ( 'template_redirect', array(&$this,'redirect_taxonomy') );
 		add_action( 'pre_get_posts', array(&$this,'remove_limit_in_taxonomy_request') );
 		add_action( 'pre_get_posts', array(&$this,'query_grouped_terms_together') );
+		add_filter( 'term_link', array(&$this,'rewrite_term_link_as_main_term'), 20, 3 );
 
 //		add_filter( 'posts_request', array(&$this,'dump_request') );
-
 	}
 	function dump_request( $input ) {
 
 		echo $input;die;
 
 		return $input;
+	}
+
+	function rewrite_term_link_as_main_term( $link, $term, $taxonomy ) {
+		if ( $taxonomy !== $this->taxonomy )
+			return $link;
+
+		$repo = new WP_Term_Grouped_Repository();
+		$group = $repo->getByTerm( $term );
+		if ( is_null($group) ) {
+			return $link;
+		}
+
+		$main_term = $group->getPrimary();
+		if ( $main_term->term_id == $term->term_id ) {
+			return $link;
+		}
+
+		$link = get_term_link( $main_term );
+
+		return $link;
 	}
 
 	function remove_limit_in_taxonomy_request($query) {

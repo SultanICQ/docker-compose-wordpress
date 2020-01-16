@@ -55,5 +55,6 @@ class WP_Term_Grouped {
 			if ( $term->parent == 0 ) {continue;}
 			$parents[$term->parent] = get_term( $term->parent, $term->taxonomy );
 		}
+		return $parents;
 	}
 }
