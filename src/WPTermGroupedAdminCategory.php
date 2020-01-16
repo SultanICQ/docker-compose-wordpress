@@ -19,9 +19,11 @@ class WPTermGroupedAdminCategory {
 			$repo = new WP_Term_Grouped_Repository();
 			$group = $repo->getByTerm( $term );
 
+			$this->build_edit_description_footer_field($term, $group);
 			$this->build_edit_primary_field($term, $group);
 			$this->build_edit_grouped_terms_field($term, $group);
 		} elseif (current_filter() == $this->taxonomy . '_add_form_fields') {
+			$this->build_description_footer_field();
 			$this->build_primary_field();
 			$this->build_grouped_terms_field();
 		}
@@ -54,8 +56,20 @@ class WPTermGroupedAdminCategory {
 		}
 
 		$repo->add( $group );
+
+		update_term_meta( $term->term_id, 'description_footer', $_POST['description_footer'] );
 	}
 
+	function build_edit_description_footer_field($term, $group) {
+	    $description = get_term_meta( $term->term_id, 'description_footer', true );
+		?>
+        <tr class="form-field term-description_footer-wrap">
+            <th scope="row"><label for="description_footer"><?php _e( 'Description Footer' ); ?></label></th>
+            <td><textarea name="description_footer" id="description_footer" rows="5" cols="50" class="large-text"><?php echo $description; // textarea_escaped ?></textarea>
+                <p class="description_footer"><?php _e('The description footer is not prominent by default; however, some themes may show it.'); ?></p></td>
+        </tr>
+		<?php
+	}
 	function build_edit_primary_field($term, $group) {
 		$is_primary = false;
 		if ( !is_null($group) && !empty($group->getPrimary()) ) {
@@ -100,6 +114,15 @@ class WPTermGroupedAdminCategory {
 				<?php endforeach; ?>
 				<p class="description"><?php _e('Select the terms that define the group'); ?></p></td>
 		</tr>
+		<?php
+	}
+	function build_description_footer_field() {
+		?>
+        <div class="form-field term-description_footer-wrap">
+            <label for="tag-description_footer"><?php _e( 'Description Footer' ); ?></label>
+            <textarea name="description_footer" id="tag-description_footer" rows="5" cols="40"></textarea>
+            <p><?php _e('The description footer is not prominent by default; however, some themes may show it.'); ?></p>
+        </div>
 		<?php
 	}
 	function build_primary_field() {
