@@ -65,7 +65,14 @@ class WPTermGroupedAdminCategory {
 		?>
         <tr class="form-field term-description_footer-wrap">
             <th scope="row"><label for="description_footer"><?php _e( 'Description Footer' ); ?></label></th>
-            <td><textarea name="description_footer" id="description_footer" rows="5" cols="50" class="large-text"><?php echo $description; // textarea_escaped ?></textarea>
+            <td><?php
+                wp_editor( $description,
+                'description_footer', [
+                        'textarea_name' => 'description_footer',
+                        'textarea_rows' => 20,
+                        'textarea_cols' => 40,
+                    ]);
+            ?>
                 <p class="description_footer"><?php _e('The description footer is not prominent by default; however, some themes may show it.'); ?></p></td>
         </tr>
 		<?php
