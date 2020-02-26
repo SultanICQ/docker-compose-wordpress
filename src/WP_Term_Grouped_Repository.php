@@ -46,11 +46,16 @@ class WP_Term_Grouped_Repository {
 	}
 
 	public function add( WP_Term_Grouped $group ) {
-		if ( $group->getId() == '' ) {
-			$id = $this->buildIdForGroup( $group );
-			$group->setId( $id );
-		}
+		$this->assureGroupId( $group );
 		$this->data[ $group->getId() ] = $this->dehydrateGroup($group);
+		$this->save();
+
+		return $group->getId();
+	}
+
+	public function remove( WP_Term_Grouped $group ) {
+		$this->assureGroupId( $group );
+		unset($this->data[ $group->getId() ]);
 		$this->save();
 
 		return $group->getId();
@@ -65,5 +70,15 @@ class WP_Term_Grouped_Repository {
 		}
 
 		return null;
+	}
+
+	/**
+	 * @param WP_Term_Grouped $group
+	 */
+	private function assureGroupId( WP_Term_Grouped $group ): void {
+		if ( $group->getId() == '' ) {
+			$id = $this->buildIdForGroup( $group );
+			$group->setId( $id );
+		}
 	}
 }
