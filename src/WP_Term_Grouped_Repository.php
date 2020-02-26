@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Class WP_Term_Grouped_Repository
+ * a:5:{s:32:"3d6064650d039e0b2c25494514bc0ce7";a:3:{s:2:"id";s:32:"3d6064650d039e0b2c25494514bc0ce7";s:7:"primary";i:68;s:5:"terms";a:4:{i:0;i:68;i:1;i:74;i:2;i:76;i:3;i:71;}}s:32:"871c985dfabce687ba4ec6bee47630e2";a:3:{s:2:"id";s:32:"871c985dfabce687ba4ec6bee47630e2";s:7:"primary";i:69;s:5:"terms";a:4:{i:0;i:69;i:1;i:67;i:2;i:72;i:3;i:75;}}s:32:"9f482dec3633881fbcc1a35d5a21518d";a:3:{s:2:"id";s:32:"9f482dec3633881fbcc1a35d5a21518d";s:7:"primary";i:70;s:5:"terms";a:2:{i:0;i:70;i:1;i:73;}}s:32:"003dc3ea8f3b185e0cc73fc267ad90e0";a:3:{s:2:"id";s:32:"003dc3ea8f3b185e0cc73fc267ad90e0";s:7:"primary";i:66;s:5:"terms";a:2:{i:0;i:66;i:1;i:54;}}s:32:"e7a0e7d3c0676fbb241afb51fbfd6a17";a:3:{s:2:"id";s:32:"e7a0e7d3c0676fbb241afb51fbfd6a17";s:7:"primary";i:65;s:5:"terms";a:2:{i:0;i:65;i:1;i:54;}}}
+ */
 class WP_Term_Grouped_Repository {
 	private $option = 'term_grouped_data';
 
@@ -57,8 +61,6 @@ class WP_Term_Grouped_Repository {
 		$this->assureGroupId( $group );
 		unset($this->data[ $group->getId() ]);
 		$this->save();
-
-		return $group->getId();
 	}
 
 	public function getByTerm( WP_Term $term ) {
@@ -75,7 +77,7 @@ class WP_Term_Grouped_Repository {
 	/**
 	 * @param WP_Term_Grouped $group
 	 */
-	private function assureGroupId( WP_Term_Grouped $group ): void {
+	private function assureGroupId( WP_Term_Grouped $group ) {
 		if ( $group->getId() == '' ) {
 			$id = $this->buildIdForGroup( $group );
 			$group->setId( $id );

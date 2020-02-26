@@ -55,7 +55,12 @@ class WPTermGroupedAdminCategory {
 			$group->setPrimary($term);
 		}
 
-		$repo->add( $group );
+		if ( count( $group->terms() )>1 )
+        {
+	        $repo->add( $group );
+        } else {
+			$repo->remove( $group );
+		}
 
 		update_term_meta( $term->term_id, 'description_footer', $_POST['description_footer'] );
 	}
