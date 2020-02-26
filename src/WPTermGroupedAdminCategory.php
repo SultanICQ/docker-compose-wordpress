@@ -30,11 +30,14 @@ class WPTermGroupedAdminCategory {
 	}
 
 	function save_fields($term_id) {
+		update_term_meta( $term_id, 'description_footer', $_POST['description_footer'] );
+		$this->save_groupped_data($term_id);
+	}
+
+	function save_groupped_data( $term_id ) {
 		if (!isset($_POST['grouped_term'])) {
 			return;
 		}
-
-		$term = get_term($term_id);
 
 		$repo = new WP_Term_Grouped_Repository();
 		$group = $repo->getByTerm( $term );
@@ -56,14 +59,12 @@ class WPTermGroupedAdminCategory {
 		}
 
 		if ( count( $group->terms() )>1 )
-        {
-	        $repo->add( $group );
-        } else {
+		{
+			$repo->add( $group );
+		} else {
 			$repo->remove( $group );
 		}
-
-		update_term_meta( $term->term_id, 'description_footer', $_POST['description_footer'] );
-	}
+    }
 
 	function build_edit_description_footer_field($term, $group) {
 	    $description = get_term_meta( $term->term_id, 'description_footer', true );
