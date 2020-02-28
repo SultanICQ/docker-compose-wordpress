@@ -38,7 +38,7 @@ class WPTermGroupedAdminCategory {
 		if (!isset($_POST['grouped_term'])) {
 			return;
 		}
-
+        $term = get_term($term_id);
 		$repo = new WP_Term_Grouped_Repository();
 		$group = $repo->getByTerm( $term );
 		if ( is_null($group) ) {
@@ -49,12 +49,14 @@ class WPTermGroupedAdminCategory {
 
 		$group->add( $term );
 
-		foreach ($_POST['grouped_term']['terms'] as $value_term_id ) {
-			$termToGroupWith = get_term($value_term_id);
-			$group->add( $termToGroupWith );
+		if ( !empty($_POST['grouped_term']['terms']) ) {
+			foreach ($_POST['grouped_term']['terms'] as $value_term_id ) {
+				$termToGroupWith = get_term($value_term_id);
+				$group->add( $termToGroupWith );
+			}
 		}
 
-		if ( $_POST['grouped_term']['is_primary'] ) {
+		if ( isset($_POST['grouped_term']['is_primary']) && $_POST['grouped_term']['is_primary'] ) {
 			$group->setPrimary($term);
 		}
 
