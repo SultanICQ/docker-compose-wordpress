@@ -32,7 +32,7 @@ class WPTermGroupedAdminCategory {
 	function save_fields($term_id) {
 		update_term_meta( $term_id, 'description_footer', $_POST['description_footer'] );
 		$this->save_groupped_data($term_id);
-	}
+	}ƒ
 
 	function save_groupped_data( $term_id ) {
 		if (!isset($_POST['grouped_term'])) {

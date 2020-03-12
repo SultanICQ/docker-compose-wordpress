@@ -34,9 +34,19 @@ class WP_Term_Grouped_Repository {
 
 		$group->setId( $data['id'] );
 		array_walk( $data['terms'], function($v) use ( $group ){
-			$group->add( get_term( $v ) );
+			$term = get_term($v);
+			if ( is_null($term) || is_wp_error($term) ) {
+			} else {
+				$group->add( get_term( $v ) );
+			}
 		} );
-		$group->setPrimary( get_term($data['primary']) );
+
+		$term = get_term($data['primary']);
+		if ( is_null($term) || is_wp_error($term) ) {
+
+		} else {
+			$group->setPrimary( $term );
+		}
 
 		return $group;
 	}
